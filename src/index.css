@@ -1,0 +1,337 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource/dm-serif-display/400.css";
+
+/* =========================================================
+   DESIGN TOKENS  –  "Twilight Coral" palette
+   Change a colour here and the whole app updates.
+
+   ink    : deep midnight indigo  (text, dark surfaces)   was navy  #0B1F33
+   canvas : soft lavender white   (page background)       was cream #FAF8F3
+   brand  : electric violet       (primary actions, AI)   was orange #F97316
+   coral  : warm coral            (food / warmth accent)  new
+   gold   : saffron               (ratings, sparkles)     new
+========================================================= */
+@theme {
+  --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "DM Serif Display", Georgia, serif;
+
+  --color-ink: #150f38;
+  --color-ink-soft: #261c5c;
+  --color-canvas: #f7f5ff;
+  --color-mist: #efecfb;
+
+  --color-brand-50: #f4f1ff;
+  --color-brand-100: #e9e3ff;
+  --color-brand-200: #d5caff;
+  --color-brand-300: #b9a8ff;
+  --color-brand-400: #9b84ff;
+  --color-brand-500: #7f62fa;
+  --color-brand-600: #6743ee;
+  --color-brand-700: #5632cf;
+  --color-brand-800: #4527a6;
+
+  --color-coral-50: #fff1ec;
+  --color-coral-100: #ffe0d5;
+  --color-coral-200: #ffc2ad;
+  --color-coral-300: #ffa184;
+  --color-coral-400: #ff8461;
+  --color-coral-500: #ff6a42;
+  --color-coral-600: #ec4f26;
+
+  --color-gold-400: #ffc24b;
+  --color-gold-500: #f5a524;
+}
+
+/* ---------- Base ---------- */
+:root {
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-brand-600);
+  color: white;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-brand-500);
+  outline-offset: 3px;
+}
+
+/* native <option> lists ignore Tailwind colours on dark selects */
+select option {
+  color: var(--color-ink);
+  background: #fff;
+}
+
+/* ---------- Reusable utilities ---------- */
+@utility text-gradient {
+  background-image: linear-gradient(100deg, var(--color-brand-600), var(--color-coral-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-gradient-light {
+  background-image: linear-gradient(100deg, var(--color-brand-300), var(--color-coral-300));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-brand-gradient {
+  background-image: linear-gradient(135deg, var(--color-brand-600), var(--color-coral-500));
+}
+
+@utility bg-mesh-dark {
+  background-color: var(--color-ink);
+  background-image:
+    radial-gradient(60rem 30rem at 0% 0%, rgb(103 67 238 / 0.28), transparent 60%),
+    radial-gradient(45rem 28rem at 100% 100%, rgb(255 106 66 / 0.16), transparent 60%);
+}
+
+/* ---------- Hero floating badges ---------- */
+@keyframes badge-float-left {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes badge-float-right {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(14px);
+  }
+}
+
+.float-budget {
+  animation: badge-float-left 4s ease-in-out infinite;
+}
+
+.float-dietary {
+  animation: badge-float-right 4.5s ease-in-out infinite;
+}
+
+/* ---------- Scroll animation helpers ---------- */
+.card-hover,
+.feature-card,
+.feature-icon,
+.traveller-card,
+.traveller-icon {
+  will-change: transform;
+}
+
+.how-step {
+  will-change: transform, opacity;
+}
+
+.how-step.is-active {
+  border-color: var(--color-brand-600) !important;
+  box-shadow: 0 20px 50px rgb(103 67 238 / 0.16);
+}
+
+/* ---------- Loader ---------- */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-canvas);
+}
+
+#dinemate-loader {
+  overflow: visible;
+}
+
+#dinemate-loader .wordmark-text {
+  opacity: 0;
+}
+
+/* ---------- Restaurant result cards ---------- */
+.restaurant-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgb(21 15 56 / 0.12);
+  border-color: var(--color-brand-300);
+}
+
+.match-ring {
+  box-shadow: 0 0 0 4px rgb(103 67 238 / 0.1);
+}
+
+/* ---------- AI demo layout ---------- */
+.demo-layout {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.75rem;
+}
+
+.demo-preferences {
+  width: 420px;
+  flex: 0 0 420px;
+  position: relative;
+}
+
+.restaurant-results {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.restaurant-results-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 1100px) {
+  .demo-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .demo-preferences {
+    width: 100%;
+    flex: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .restaurant-results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-preferences > div {
+    padding: 1.25rem;
+  }
+}
+
+/* ---------- Floating AI-demo button ---------- */
+.demo-fab-label {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  white-space: nowrap;
+  transition:
+    max-width 600ms ease,
+    opacity 180ms ease;
+}
+
+.demo-fab:hover .demo-fab-label,
+.demo-fab:focus-visible .demo-fab-label {
+  max-width: 7rem;
+  opacity: 1;
+}
+
+/* ---------- Navigation ---------- */
+.nav-link-active {
+  color: var(--color-brand-600) !important;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 3.6rem;
+  bottom: 10rem;
+  z-index: 49;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--color-brand-600);
+  color: white;
+  padding: 0.95rem 1.25rem;
+  font: inherit;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgb(21 15 56 / 0.25);
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .back-to-top {
+    right: 1rem;
+  }
+}
+
+/* ---------- CRUD module: small entrance animations ---------- */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pop-in {
+  animation: pop-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toast-in {
+  animation: toast-in 0.35s ease both;
+}
+
+/* ---------- Respect reduced-motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  #loader {
+    display: none;
+  }
+
+  .float-budget,
+  .float-dietary {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
