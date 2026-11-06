@@ -61,11 +61,3 @@ src/
 | CRUD | `profileApi.js` + `useProfiles.js` |
 | Bonus search | `SearchBar` + `matchesQuery()` |
 | Database file | `db.json` |
-
-## Changes from Part 1 (functionality kept, a few fixes)
-
-* Same landing page, GSAP animations, loader, and AI demo (location → Google Places → results).
-* New colour palette driven by theme tokens in `index.css`.
-* The demo's results panel (commented out in the original HTML) is implemented.
-* "Get Recommendations" buttons now open the demo (before, they pointed at a non-existent `#ai-demo`).
-* `alert()` calls replaced by inline messages; Google Maps loads lazily; API key moved to `.env`.
